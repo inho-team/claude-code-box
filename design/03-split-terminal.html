@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code Box IDE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#181c22",
+            "surface-container": "#1c2026",
+            "on-primary": "#3f008e",
+            "on-tertiary-fixed": "#1b1c1c",
+            "on-tertiary-container": "#e7e5e4",
+            "inverse-primary": "#732ee4",
+            "tertiary-container": "#676666",
+            "on-secondary-fixed": "#1a1a2e",
+            "error-container": "#93000a",
+            "primary-fixed-dim": "#d2bbff",
+            "on-tertiary": "#303030",
+            "on-primary-fixed-variant": "#5a00c6",
+            "on-primary-container": "#ede0ff",
+            "tertiary-fixed-dim": "#c8c6c6",
+            "surface": "#10141a",
+            "secondary": "#c6c4df",
+            "on-error-container": "#ffdad6",
+            "surface-variant": "#31353c",
+            "on-secondary": "#2f2e43",
+            "on-surface-variant": "#ccc3d8",
+            "on-primary-fixed": "#25005a",
+            "on-surface": "#dfe2eb",
+            "background": "#10141a",
+            "secondary-fixed": "#e2e0fc",
+            "on-secondary-container": "#b8b6d0",
+            "outline-variant": "#4a4455",
+            "on-tertiary-fixed-variant": "#474747",
+            "primary": "#d2bbff",
+            "error": "#ffb4ab",
+            "on-secondary-fixed-variant": "#45455b",
+            "surface-container-high": "#262a31",
+            "surface-bright": "#353940",
+            "inverse-on-surface": "#2d3137",
+            "surface-tint": "#d2bbff",
+            "secondary-fixed-dim": "#c6c4df",
+            "on-background": "#dfe2eb",
+            "primary-fixed": "#eaddff",
+            "on-error": "#690005",
+            "primary-container": "#7c3aed",
+            "surface-container-lowest": "#0a0e14",
+            "outline": "#958da1",
+            "inverse-surface": "#dfe2eb",
+            "tertiary-fixed": "#e4e2e1",
+            "surface-container-highest": "#31353c",
+            "secondary-container": "#47475d",
+            "surface-dim": "#10141a",
+            "tertiary": "#c8c6c6"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"],
+            "mono": ["JetBrains Mono"]
+          },
+          borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 18px;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #4a4455;
+    }
+    .terminal-bg {
+      background-color: #0d1117;
+    }
+    .resize-handle-h {
+      height: 3px;
+      background-color: #2d2d2d;
+      cursor: row-resize;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-[#1c2026] docked full-width top-0 h-10 flex items-center justify-between w-full px-3 z-50">
+<div class="flex items-center gap-6">
+<div class="text-[#7c3aed] font-black tracking-tighter text-lg">Claude Code</div>
+<nav class="hidden md:flex items-center gap-4">
+<a class="text-[#d2bbff] border-b-2 border-[#7c3aed] font-sans text-[0.8125rem] tracking-wide uppercase font-bold h-10 flex items-center" href="#">File</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Edit</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Selection</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">View</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Go</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Run</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Terminal</a>
+<a class="text-[#958da1] hover:bg-[#353940] transition-colors duration-150 font-sans text-[0.8125rem] tracking-wide uppercase font-bold px-2 h-10 flex items-center" href="#">Help</a>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-[#958da1] hover:bg-[#353940] p-1.5 transition-colors duration-150">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="text-[#958da1] hover:bg-[#353940] p-1.5 transition-colors duration-150">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-[#1c2026] docked left-0 h-full w-16 flex flex-col items-center py-4 flex-shrink-0">
+<div class="flex flex-col items-center gap-4 w-full">
+<!-- Editor active -->
+<button class="text-[#d2bbff] border-l-2 border-[#7c3aed] bg-[#10141a] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="code">code</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest">Editor</span>
+</button>
+<button class="text-[#4a4455] hover:text-[#d2bbff] hover:bg-[#353940] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest">Browser</span>
+</button>
+<button class="text-[#4a4455] hover:text-[#d2bbff] hover:bg-[#353940] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest">Search</span>
+</button>
+<button class="text-[#4a4455] hover:text-[#d2bbff] hover:bg-[#353940] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest">Source</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col items-center gap-4 w-full">
+<button class="text-[#4a4455] hover:text-[#d2bbff] hover:bg-[#353940] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="bug_report">bug_report</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest text-center px-1">Feedback</span>
+</button>
+<button class="text-[#4a4455] hover:text-[#d2bbff] hover:bg-[#353940] w-full py-3 flex flex-col items-center gap-1 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-sans text-[0.6875rem] font-bold uppercase tracking-widest">Settings</span>
+</button>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Code Editor Area (60% Width) -->
+<section class="w-[60%] flex flex-col bg-surface overflow-hidden">
+<!-- Editor Tabs -->
+<div class="flex bg-surface-container h-9 flex-shrink-0">
+<div class="flex items-center px-4 bg-surface border-t-2 border-primary text-primary text-[0.8125rem] font-medium gap-2">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="description">description</span>
+            App.tsx
+          </div>
+<div class="flex items-center px-4 text-on-surface-variant hover:bg-surface-container-high transition-colors text-[0.8125rem] font-medium gap-2 cursor-pointer">
+<span class="material-symbols-outlined text-[14px]" data-icon="javascript">javascript</span>
+            Index.ts
+          </div>
+<div class="flex-1"></div>
+</div>
+<!-- Editor Content -->
+<div class="flex-1 flex font-mono text-[0.875rem] leading-relaxed overflow-auto custom-scrollbar p-4">
+<div class="w-10 text-outline-variant text-right pr-4 select-none">
+            1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/>10<br/>11<br/>12<br/>13<br/>14<br/>15<br/>16
+          </div>
+<div class="flex-1">
+<span class="text-[#7c3aed]">import</span> React, { <span class="text-[#d2bbff]">useState</span>, <span class="text-[#d2bbff]">useEffect</span> } <span class="text-[#7c3aed]">from</span> <span class="text-on-secondary-container">'react'</span>;<br/>
+<span class="text-[#7c3aed]">import</span> { <span class="text-[#d2bbff]">Layout</span> } <span class="text-[#7c3aed]">from</span> <span class="text-on-secondary-container">'./components/Layout'</span>;<br/>
+<br/>
+<span class="text-[#7c3aed]">export const</span> <span class="text-primary-fixed-dim">App</span> = () =&gt; {<br/>
+              <span class="text-[#7c3aed]">const</span> [code, setCode] = <span class="text-[#d2bbff]">useState</span>&lt;<span class="text-[#d2bbff]">string</span>&gt;(<span class="text-on-secondary-container">''</span>);<br/>
+<br/>
+              <span class="text-[#d2bbff]">useEffect</span>(() =&gt; {<br/>
+                <span class="text-outline">/* Initialize Claude Code Engine */</span><br/>
+                <span class="text-primary-fixed-dim">Claude</span>.<span class="text-[#d2bbff]">initialize</span>({<br/>
+                  mode: <span class="text-on-secondary-container">'proactive'</span>,<br/>
+                  theme: <span class="text-on-secondary-container">'monolith-dark'</span><br/>
+                });<br/>
+              }, []);<br/>
+<br/>
+              <span class="text-[#7c3aed]">return</span> (<br/>
+                &lt;<span class="text-[#d2bbff]">Layout</span>&gt;<br/>
+                  &lt;<span class="text-[#d2bbff]">Editor</span> value={code} /&gt;<br/>
+                &lt;/<span class="text-[#d2bbff]">Layout</span>&gt;<br/>
+              );<br/>
+            };
+          </div>
+</div>
+</section>
+<!-- Right Panel: Terminals (40% Width) -->
+<aside class="w-[40%] flex flex-col border-l border-outline-variant/15 overflow-hidden">
+<!-- Terminal Global Tab Bar -->
+<div class="flex items-center bg-surface-container-low h-9 flex-shrink-0 px-2 gap-1">
+<button class="bg-surface-container-high px-3 h-7 flex items-center gap-2 text-[0.75rem] font-bold uppercase tracking-wider text-primary">
+            Terminal 1
+            <span class="material-symbols-outlined text-[14px]" data-icon="close">close</span>
+</button>
+<button class="px-3 h-7 flex items-center gap-2 text-[0.75rem] font-bold uppercase tracking-wider text-outline hover:bg-surface-container-highest transition-colors">
+            Terminal 2
+            <span class="material-symbols-outlined text-[14px]" data-icon="close">close</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+<div class="flex-1"></div>
+<div class="flex items-center gap-2 px-2">
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer" data-icon="split_screen">splitscreen</span>
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col terminal-bg overflow-hidden">
+<!-- Top Terminal (Terminal 1 - Claude Code) -->
+<div class="h-1/2 flex flex-col overflow-hidden">
+<div class="flex-1 p-3 font-mono text-[0.8125rem] overflow-auto custom-scrollbar">
+<div class="flex gap-2">
+<span class="text-emerald-500 font-bold">➜</span>
+<span class="text-primary font-bold">~/projects/claude-box</span>
+<span class="text-white">claude</span>
+</div>
+<div class="mt-2 text-primary font-bold">Claude Code CLI v2.4.0</div>
+<div class="mt-1 text-outline">Connected to Anthropic Intelligence Engine...</div>
+<div class="mt-4 flex gap-2">
+<span class="text-emerald-500">🤖</span>
+<div class="flex-1">
+<p class="text-white">I've analyzed <span class="text-primary-fixed-dim">App.tsx</span>. I suggest the following optimizations:</p>
+<ul class="mt-2 space-y-1 text-outline-variant">
+<li>• Memoize the <span class="text-on-surface">Editor</span> component to prevent unnecessary re-renders.</li>
+<li>• Add a <span class="text-on-surface">Suspense</span> boundary for the engine initialization.</li>
+<li>• Move the configuration object to a separate static file.</li>
+</ul>
+<div class="mt-3 flex gap-4">
+<button class="bg-primary-container text-on-primary-container px-3 py-1 text-[0.75rem] font-bold uppercase hover:opacity-90 transition-opacity">Apply All</button>
+<button class="text-primary border border-primary/30 px-3 py-1 text-[0.75rem] font-bold uppercase hover:bg-primary/10 transition-colors">Ignore</button>
+</div>
+</div>
+</div>
+<div class="mt-6 flex gap-2">
+<span class="text-emerald-500 font-bold">➜</span>
+<span class="w-2 h-4 bg-primary animate-pulse inline-block align-middle"></span>
+</div>
+</div>
+</div>
+<!-- Divider Handle -->
+<div class="resize-handle-h flex items-center justify-center">
+<div class="w-8 h-[1px] bg-outline-variant/50"></div>
+</div>
+<!-- Bottom Terminal (Terminal 2 - Git/NPM) -->
+<div class="h-1/2 flex flex-col overflow-hidden">
+<div class="flex-1 p-3 font-mono text-[0.8125rem] overflow-auto custom-scrollbar">
+<div class="flex gap-2">
+<span class="text-emerald-500 font-bold">➜</span>
+<span class="text-primary font-bold">~/projects/claude-box</span>
+<span class="text-secondary">git status</span>
+</div>
+<div class="mt-1 text-on-surface-variant">
+                On branch main<br/>
+                Your branch is up to date with 'origin/main'.<br/>
+<br/>
+                Changes not staged for commit:<br/>
+                  <span class="text-error">(use "git add &lt;file&gt;..." to update what will be committed)</span><br/>
+                  <span class="text-error">modified:   src/App.tsx</span><br/>
+                  <span class="text-error">modified:   package.json</span><br/>
+</div>
+<div class="mt-4 flex gap-2">
+<span class="text-emerald-500 font-bold">➜</span>
+<span class="text-primary font-bold">~/projects/claude-box</span>
+<span class="text-secondary">npm run build</span>
+</div>
+<div class="mt-1">
+<span class="text-on-surface-variant">&gt; claude-code-box@1.0.4 build</span><br/>
+<span class="text-on-surface-variant">&gt; tsc &amp;&amp; vite build</span><br/>
+<br/>
+<span class="text-emerald-500">✓ 42 modules transformed.</span><br/>
+<span class="text-white">dist/index.html                  0.48 kB │ gzip:  0.31 kB</span><br/>
+<span class="text-white">dist/assets/index-D9B1.js       142.12 kB │ gzip: 44.56 kB</span><br/>
+<span class="text-emerald-500">build finished in 1.2s.</span>
+</div>
+<div class="mt-4 flex gap-2">
+<span class="text-emerald-500 font-bold">➜</span>
+<span class="text-primary font-bold">~/projects/claude-box</span>
+<span class="w-2 h-4 bg-outline animate-pulse inline-block align-middle"></span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+<!-- Status Bar (Extra Context) -->
+<footer class="bg-[#0a0e14] h-6 flex items-center justify-between px-3 text-[0.6875rem] font-mono text-outline uppercase tracking-widest border-t border-outline-variant/10">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[12px]" data-icon="account_tree">account_tree</span>
+        main*
+      </div>
+<div class="flex items-center gap-1 hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[12px]" data-icon="sync">sync</span>
+        Syncing...
+      </div>
+<div class="flex items-center gap-1 hover:text-on-surface transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[12px]" data-icon="error">error</span>
+        0
+        <span class="material-symbols-outlined text-[12px]" data-icon="warning">warning</span>
+        2
+      </div>
+</div>
+<div class="flex items-center gap-4">
+<div>Ln 12, Col 45</div>
+<div>Spaces: 2</div>
+<div>UTF-8</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[12px]" data-icon="bolt" data-weight="fill">bolt</span>
+        Claude AI Active
+      </div>
+</div>
+</footer>
+</body></html>

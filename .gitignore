@@ -1,0 +1,40 @@
+node_modules/
+dist/
+out/
+*.log
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build output
+release/
+*.exe
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+*.snap
+
+# Claude Code
+.claude/settings-local.json
+.qe/state/
+.qe/tasks/
+.qe/checklists/
+.qe/.archive/
+
+# Vite
+node_modules/.vite/
+vite.renderer.config.ts

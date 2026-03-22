@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="boxGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#5a00c6"/>
+    </linearGradient>
+    <linearGradient id="topFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9f67ff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="rightFace" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10141a"/>
+      <stop offset="100%" stop-color="#1c2026"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect x="0" y="0" width="1024" height="1024" rx="180" ry="180" fill="url(#bgGrad)"/>
+
+  <!-- 3D Box - isometric style -->
+  <!-- Front face -->
+  <path d="M 310 380 L 512 280 L 714 380 L 714 620 L 512 720 L 310 620 Z" fill="url(#boxGrad)" opacity="0.95"/>
+
+  <!-- Top face -->
+  <path d="M 310 380 L 512 280 L 714 380 L 512 480 Z" fill="url(#topFace)"/>
+
+  <!-- Right face -->
+  <path d="M 714 380 L 714 620 L 512 720 L 512 480 Z" fill="url(#rightFace)"/>
+
+  <!-- Left face (front-left, slightly brighter) -->
+  <path d="M 310 380 L 512 480 L 512 720 L 310 620 Z" fill="#7c3aed" opacity="0.85"/>
+
+  <!-- Box lid opening line (top) -->
+  <path d="M 310 380 L 512 280 L 714 380 L 512 480 Z" fill="none" stroke="#d2bbff" stroke-width="2.5" opacity="0.4"/>
+
+  <!-- Terminal cursor prompt ">" on the front face -->
+  <text x="440" y="610" font-family="'JetBrains Mono', 'Fira Code', monospace" font-weight="700" font-size="120" fill="#d2bbff" opacity="0.9">&gt;_</text>
+
+  <!-- Subtle edge highlights -->
+  <path d="M 310 380 L 310 620 L 512 720 L 714 620 L 714 380" fill="none" stroke="#d2bbff" stroke-width="2" opacity="0.15"/>
+  <path d="M 512 480 L 512 720" fill="none" stroke="#d2bbff" stroke-width="1.5" opacity="0.2"/>
+</svg>

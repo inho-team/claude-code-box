@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code Box - Box Configuration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#bfc7d5",
+                        "primary-container": "#0099ff",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed-variant": "#00497e",
+                        "on-tertiary-fixed": "#051c34",
+                        "on-secondary-fixed-variant": "#4f4802",
+                        "primary": "#9fcaff",
+                        "surface-container-highest": "#353534",
+                        "surface-variant": "#353534",
+                        "on-primary-fixed": "#001d36",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#344861",
+                        "on-secondary": "#363100",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#89919e",
+                        "tertiary-container": "#8296b3",
+                        "on-error": "#690005",
+                        "primary-fixed": "#d2e4ff",
+                        "secondary-fixed": "#f0e591",
+                        "surface-container": "#201f1f",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-dim": "#131313",
+                        "tertiary": "#b3c8e7",
+                        "secondary-container": "#514a04",
+                        "error-container": "#93000a",
+                        "surface": "#131313",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "tertiary-fixed": "#d2e4ff",
+                        "outline-variant": "#3f4753",
+                        "on-primary": "#003259",
+                        "secondary-fixed-dim": "#d3c878",
+                        "surface-tint": "#9fcaff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002f54",
+                        "inverse-primary": "#0061a5",
+                        "secondary": "#d3c878",
+                        "primary-fixed-dim": "#9fcaff",
+                        "on-tertiary-container": "#1a2e46",
+                        "on-tertiary": "#1d314a",
+                        "tertiary-fixed-dim": "#b3c8e7",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed": "#1f1c00",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-container": "#c4ba6b"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f4753;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: #201f1f;
+            height: 4px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            background: #0099ff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-zinc-950 dark:bg-[#131313] flex justify-between items-center w-full px-4 h-12 border-b border-zinc-800">
+<div class="flex items-center gap-6">
+<span class="text-blue-500 font-bold tracking-tighter text-lg font-headline">Claude Code Box</span>
+<nav class="hidden md:flex items-center gap-4">
+<a class="text-zinc-500 hover:text-zinc-300 font-['Space_Grotesk'] tracking-tight text-sm uppercase" href="#">root</a>
+<a class="text-zinc-500 hover:text-zinc-300 font-['Space_Grotesk'] tracking-tight text-sm uppercase" href="#">src</a>
+<a class="text-zinc-500 hover:text-zinc-300 font-['Space_Grotesk'] tracking-tight text-sm uppercase" href="#">core</a>
+<a class="text-blue-400 font-bold border-b-2 border-blue-500 pb-1 font-['Space_Grotesk'] tracking-tight text-sm uppercase" href="#">v1.0.4</a>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-zinc-500 hover:bg-zinc-900 transition-colors duration-150 active:opacity-80 scale-95 duration-75">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+</button>
+<button class="p-2 text-zinc-500 hover:bg-zinc-900 transition-colors duration-150 active:opacity-80 scale-95 duration-75">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</button>
+<button class="p-2 text-blue-500 hover:bg-zinc-900 transition-colors duration-150 active:opacity-80 scale-95 duration-75">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<div class="h-6 w-px bg-zinc-800 mx-1"></div>
+<button class="px-3 py-1 bg-primary-container text-on-primary-container text-[10px] font-bold font-headline tracking-widest uppercase rounded-none">EXECUTE</button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-12 h-[calc(100vh-48px)] flex flex-col border-r border-zinc-800 bg-zinc-950 dark:bg-[#131313] w-16 z-40">
+<div class="flex flex-col items-center py-4 gap-1">
+<div class="w-10 h-10 bg-zinc-900 flex items-center justify-center border border-zinc-800 mb-4">
+<span class="material-symbols-outlined text-zinc-500 text-sm">developer_board</span>
+</div>
+<a class="text-zinc-600 flex flex-col items-center justify-center py-4 w-full hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+<span class="font-['Space_Grotesk'] text-[8px] font-medium uppercase mt-1">Explorer</span>
+</a>
+<a class="text-zinc-600 flex flex-col items-center justify-center py-4 w-full hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-['Space_Grotesk'] text-[8px] font-medium uppercase mt-1">Search</span>
+</a>
+<a class="text-zinc-600 flex flex-col items-center justify-center py-4 w-full hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-['Space_Grotesk'] text-[8px] font-medium uppercase mt-1">Git</span>
+</a>
+<a class="text-zinc-600 flex flex-col items-center justify-center py-4 w-full hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="bug_report">bug_report</span>
+<span class="font-['Space_Grotesk'] text-[8px] font-medium uppercase mt-1">Debug</span>
+</a>
+<a class="text-zinc-600 flex flex-col items-center justify-center py-4 w-full hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="extension">extension</span>
+<span class="font-['Space_Grotesk'] text-[8px] font-medium uppercase mt-1">Market</span>
+</a>
+<button class="mt-auto mb-4 w-10 h-10 bg-blue-500/10 text-blue-500 flex items-center justify-center hover:bg-blue-500/20 transition-all border border-blue-500/30">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-16 mt-12 min-h-[calc(100vh-48px)] p-8">
+<!-- Hero Header -->
+<section class="max-w-6xl mx-auto mb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-surface-container-high text-muted-ui text-[10px] font-label uppercase tracking-widest border border-outline-variant/15">System-Config</span>
+<span class="text-primary text-[10px] font-mono">0x442_BOX_LAYOUT</span>
+</div>
+<h1 class="text-4xl md:text-6xl font-headline font-bold tracking-tight text-on-surface uppercase">Box Configuration</h1>
+</div>
+<div class="text-right">
+<p class="text-muted-ui text-xs font-mono uppercase tracking-tighter mb-1">Global Instance Status</p>
+<div class="flex items-center gap-2 justify-end">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+<span class="text-on-surface font-headline text-lg font-bold">ACTIVE_NODE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Settings -->
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Structural Controls (Bento Left) -->
+<div class="md:col-span-4 space-y-6">
+<!-- Border Thickness -->
+<div class="bg-surface-container p-6 border-l-2 border-primary">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline text-sm font-bold uppercase tracking-wider text-on-surface">Border Geometry</h3>
+<span class="material-symbols-outlined text-muted-ui text-lg">border_outer</span>
+</div>
+<div class="space-y-8">
+<div class="group">
+<div class="flex justify-between mb-4">
+<label class="text-[10px] font-label text-muted-ui uppercase tracking-widest">Stroke weight</label>
+<span class="text-[10px] font-mono text-primary">2.0px</span>
+</div>
+<input class="w-full cursor-none" max="10" min="0" type="range" value="2"/>
+</div>
+<div class="group">
+<div class="flex justify-between mb-4">
+<label class="text-[10px] font-label text-muted-ui uppercase tracking-widest">Internal Padding</label>
+<span class="text-[10px] font-mono text-primary">24px</span>
+</div>
+<input class="w-full" max="64" min="8" type="range" value="24"/>
+</div>
+</div>
+</div>
+<!-- Snap to Grid Toggle -->
+<div class="bg-surface-container-low p-6 flex flex-col justify-between aspect-square md:aspect-auto">
+<div>
+<h3 class="font-headline text-sm font-bold uppercase tracking-wider text-on-surface mb-2">Grid Dynamics</h3>
+<p class="text-xs text-muted-ui font-body leading-relaxed mb-6">Force all containers to adhere to a rigid 8px baseline grid system for brutalist alignment.</p>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border border-outline-variant/15">
+<span class="text-[10px] font-label uppercase tracking-widest">Brutalist snap-to-grid</span>
+<button class="w-10 h-5 bg-primary-container relative rounded-none flex items-center px-1">
+<div class="w-3 h-3 bg-on-primary-container"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Terminal Customization (Bento Center) -->
+<div class="md:col-span-5 bg-surface-container-high p-6 flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline text-sm font-bold uppercase tracking-wider text-on-surface">Terminal Optics</h3>
+<span class="material-symbols-outlined text-primary text-lg">terminal</span>
+</div>
+<!-- Font Selection -->
+<div class="mb-8">
+<label class="block text-[10px] font-label text-muted-ui uppercase tracking-widest mb-4">Core Typeface</label>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-4 bg-primary-container text-on-primary-container group transition-all">
+<span class="font-mono text-xs">JetBrains Mono</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-zinc-800 transition-all border border-outline-variant/15">
+<span class="font-mono text-xs opacity-60">Fira Code Retina</span>
+<span class="text-[10px] font-mono opacity-40">ALT-1</span>
+</button>
+<button class="w-full flex items-center justify-between p-4 bg-surface-container-lowest hover:bg-zinc-800 transition-all border border-outline-variant/15">
+<span class="font-mono text-xs opacity-60">Source Code Pro</span>
+<span class="text-[10px] font-mono opacity-40">ALT-2</span>
+</button>
+</div>
+</div>
+<!-- Terminal Preview Area -->
+<div class="mt-auto bg-surface-container-lowest p-4 font-mono text-[11px] leading-relaxed border border-outline-variant/15">
+<div class="flex gap-2 mb-2">
+<div class="w-2 h-2 bg-error rounded-full"></div>
+<div class="w-2 h-2 bg-secondary rounded-full"></div>
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<p class="text-primary-container"><span class="opacity-50">01</span> class <span class="text-on-surface">BoxRenderer</span> {</p>
+<p class="text-primary-container pl-4"><span class="opacity-50">02</span> constructor() {</p>
+<p class="text-on-surface pl-8"><span class="opacity-50">03</span> this.grid = <span class="text-secondary">"snap"</span>;</p>
+<p class="text-on-surface pl-8"><span class="opacity-50">04</span> this.theme = <span class="text-primary">0x0099FF</span>;</p>
+<p class="text-primary-container pl-4"><span class="opacity-50">05</span> }</p>
+<p class="text-primary-container"><span class="opacity-50">06</span> }</p>
+</div>
+</div>
+<!-- Palette Picker (Bento Right) -->
+<div class="md:col-span-3 space-y-6">
+<div class="bg-surface-container p-6 h-full border-t-2 border-secondary">
+<h3 class="font-headline text-sm font-bold uppercase tracking-wider text-on-surface mb-6">Chroma Profiles</h3>
+<p class="text-xs text-muted-ui font-body leading-relaxed mb-8">Override global syntax highlighting with high-visibility kinetic presets.</p>
+<div class="space-y-4">
+<!-- Neon Blue -->
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-label uppercase tracking-widest text-on-surface group-hover:text-primary transition-colors">Neon Blue</span>
+<span class="text-[10px] font-mono text-muted-ui italic">Default</span>
+</div>
+<div class="h-10 w-full bg-[#0099FF] flex items-center justify-center border-2 border-primary-container group-hover:shadow-[0_0_15px_rgba(0,153,255,0.3)] transition-all">
+<span class="text-[10px] font-bold text-on-primary-container">#0099FF</span>
+</div>
+</div>
+<!-- Toxic Green -->
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-label uppercase tracking-widest text-on-surface group-hover:text-emerald-400 transition-colors">Toxic Green</span>
+<span class="text-[10px] font-mono text-muted-ui">v2.1</span>
+</div>
+<div class="h-10 w-full bg-[#39ff14] opacity-80 hover:opacity-100 flex items-center justify-center border border-zinc-700 transition-all">
+<span class="text-[10px] font-bold text-zinc-950">#39FF14</span>
+</div>
+</div>
+<!-- Blood Red -->
+<div class="group cursor-pointer">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-label uppercase tracking-widest text-on-surface group-hover:text-error transition-colors">Blood Red</span>
+<span class="text-[10px] font-mono text-muted-ui">Experimental</span>
+</div>
+<div class="h-10 w-full bg-[#ff0033] opacity-80 hover:opacity-100 flex items-center justify-center border border-zinc-700 transition-all">
+<span class="text-[10px] font-bold text-zinc-950">#FF0033</span>
+</div>
+</div>
+</div>
+<div class="mt-12 pt-12 border-t border-outline-variant/15">
+<button class="w-full py-3 bg-on-surface text-surface text-[10px] font-bold font-headline uppercase tracking-[0.2em] hover:bg-white active:scale-95 transition-all">Apply All Changes</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Technical Info -->
+<footer class="max-w-6xl mx-auto mt-24 flex flex-col md:flex-row justify-between items-center py-8 border-t border-outline-variant/15 text-muted-ui font-mono text-[10px] uppercase tracking-widest">
+<div class="flex gap-8 mb-4 md:mb-0">
+<span>Kernel: 5.15.0-v1</span>
+<span>Uptime: 14:02:44:11</span>
+</div>
+<div class="flex gap-4 items-center">
+<span class="opacity-50">Config Hash:</span>
+<span class="text-primary">8f2_e91_x001_cbb</span>
+</div>
+</footer>
+</main>
+<!-- Contextual FAB (Hidden as per rule for Settings/Details pages) -->
+</body></html>

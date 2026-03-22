@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code Box - Split IDE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#bfc7d5",
+                        "primary-container": "#0099ff",
+                        "surface-bright": "#393939",
+                        "on-primary-fixed-variant": "#00497e",
+                        "on-tertiary-fixed": "#051c34",
+                        "on-secondary-fixed-variant": "#4f4802",
+                        "primary": "#9fcaff",
+                        "surface-container-highest": "#353534",
+                        "surface-variant": "#353534",
+                        "on-primary-fixed": "#001d36",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#344861",
+                        "on-secondary": "#363100",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline": "#89919e",
+                        "tertiary-container": "#8296b3",
+                        "on-error": "#690005",
+                        "primary-fixed": "#d2e4ff",
+                        "secondary-fixed": "#f0e591",
+                        "surface-container": "#201f1f",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-dim": "#131313",
+                        "tertiary": "#b3c8e7",
+                        "secondary-container": "#514a04",
+                        "error-container": "#93000a",
+                        "surface": "#131313",
+                        "on-background": "#e5e2e1",
+                        "background": "#131313",
+                        "tertiary-fixed": "#d2e4ff",
+                        "outline-variant": "#3f4753",
+                        "on-primary": "#003259",
+                        "secondary-fixed-dim": "#d3c878",
+                        "surface-tint": "#9fcaff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#002f54",
+                        "inverse-primary": "#0061a5",
+                        "secondary": "#d3c878",
+                        "primary-fixed-dim": "#9fcaff",
+                        "on-tertiary-container": "#1a2e46",
+                        "on-tertiary": "#1d314a",
+                        "tertiary-fixed-dim": "#b3c8e7",
+                        "surface-container-low": "#1c1b1b",
+                        "on-secondary-fixed": "#1f1c00",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-container": "#c4ba6b"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 18px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3f4753;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-4 h-12 border-b border-zinc-800 bg-zinc-950 dark:bg-[#131313]">
+<div class="flex items-center gap-6">
+<span class="text-blue-500 font-bold tracking-tighter text-lg font-headline">Claude Code Box</span>
+<nav class="hidden md:flex items-center gap-4">
+<span class="text-zinc-500 hover:text-zinc-300 font-headline tracking-tight text-sm uppercase cursor-pointer">root</span>
+<span class="text-zinc-500 hover:text-zinc-300 font-headline tracking-tight text-sm uppercase cursor-pointer">src</span>
+<span class="text-zinc-500 hover:text-zinc-300 font-headline tracking-tight text-sm uppercase cursor-pointer">core</span>
+<span class="text-blue-400 font-bold border-b-2 border-blue-500 pb-1 font-headline tracking-tight text-sm uppercase cursor-pointer">v1.0.4</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-zinc-900 transition-colors duration-150 p-1.5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">account_tree</span>
+</button>
+<button class="hover:bg-zinc-900 transition-colors duration-150 p-1.5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">terminal</span>
+</button>
+<button class="hover:bg-zinc-900 transition-colors duration-150 p-1.5 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-3 py-1 font-headline text-xs font-bold rounded-none hover:bg-opacity-90 transition-all duration-75 active:opacity-80 uppercase tracking-wider">
+                EXECUTE
+            </button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-12 h-[calc(100vh-48px)] flex flex-col border-r border-zinc-800 bg-zinc-950 dark:bg-[#131313] w-16 z-10">
+<div class="flex-1 flex flex-col">
+<div class="bg-zinc-900 text-blue-400 border-l-2 border-blue-500 flex flex-col items-center justify-center py-4 cursor-pointer">
+<span class="material-symbols-outlined mb-1">folder</span>
+<span class="font-headline text-[10px] font-medium uppercase tracking-tighter">Explorer</span>
+</div>
+<div class="text-zinc-600 flex flex-col items-center justify-center py-4 cursor-pointer hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200">
+<span class="material-symbols-outlined mb-1">search</span>
+<span class="font-headline text-[10px] font-medium uppercase tracking-tighter">Search</span>
+</div>
+<div class="text-zinc-600 flex flex-col items-center justify-center py-4 cursor-pointer hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200">
+<span class="material-symbols-outlined mb-1">account_tree</span>
+<span class="font-headline text-[10px] font-medium uppercase tracking-tighter">Git</span>
+</div>
+<div class="text-zinc-600 flex flex-col items-center justify-center py-4 cursor-pointer hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200">
+<span class="material-symbols-outlined mb-1">bug_report</span>
+<span class="font-headline text-[10px] font-medium uppercase tracking-tighter">Debug</span>
+</div>
+<div class="text-zinc-600 flex flex-col items-center justify-center py-4 cursor-pointer hover:bg-zinc-900 hover:text-blue-300 transition-all duration-200">
+<span class="material-symbols-outlined mb-1">extension</span>
+<span class="font-headline text-[10px] font-medium uppercase tracking-tighter">Market</span>
+</div>
+</div>
+<div class="pb-4 flex flex-col items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant/20 overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="User Terminal Profile Avatar Image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC27BVT5Z5Bq8gt29e2Nz_PKU34ux8BmL3Q0MqP0eydPuKMnDDIAWf9l2Bt4OEj2yWgD6_K947n5vS5Ka9Q7pnFKbmfbwgGRA_s91V9zkwyjXL1w7XC3mZuBG6SlvrF_CfsYjohobc-MLFd1_td5RH-vYAKFek6QmIO_KkuWFr86xcevHzkpySI8CagbRH9Fb5DV0GHvFlptA449vmS0vQyWCzcrC8k1TgmgKxLcuaXQhnv_X6zlaGG-Pqu5vIEp4iBeuj4Rhl7jXC_"/>
+</div>
+</div>
+</aside>
+<!-- Main Workspace Canvas -->
+<main class="ml-16 flex-1 flex flex-col md:flex-row bg-surface-container-lowest">
+<!-- Left Side: Web Browser Preview -->
+<section class="flex-1 flex flex-col border-r border-zinc-800">
+<!-- Browser Header Tabs -->
+<div class="h-9 bg-zinc-950 flex items-center border-b border-zinc-800">
+<div class="px-4 h-full flex items-center bg-surface-container-low border-r border-zinc-800 gap-2">
+<span class="material-symbols-outlined text-blue-400 text-sm">language</span>
+<span class="font-headline text-xs tracking-tight uppercase text-on-surface">Localhost:3000</span>
+<span class="material-symbols-outlined text-zinc-600 text-[14px] hover:text-zinc-400 cursor-pointer">close</span>
+</div>
+<div class="px-4 h-full flex items-center hover:bg-zinc-900 border-r border-zinc-800 gap-2 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-zinc-500 text-sm">dashboard</span>
+<span class="font-headline text-xs tracking-tight uppercase text-zinc-500">Analytics</span>
+</div>
+<div class="flex-1"></div>
+<div class="flex items-center gap-3 px-3">
+<span class="material-symbols-outlined text-zinc-500 text-sm hover:text-blue-400 cursor-pointer">refresh</span>
+<span class="material-symbols-outlined text-zinc-500 text-sm hover:text-blue-400 cursor-pointer">open_in_new</span>
+</div>
+</div>
+<!-- Browser URL Bar -->
+<div class="p-2 bg-zinc-900/50 flex items-center gap-2 border-b border-zinc-800/50">
+<div class="flex gap-1.5 px-2">
+<div class="w-2.5 h-2.5 rounded-full bg-error-container/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary-container/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container/40"></div>
+</div>
+<div class="flex-1 h-7 bg-surface-container-lowest border border-outline-variant/10 flex items-center px-3 gap-2">
+<span class="material-symbols-outlined text-zinc-600 text-[14px]">lock</span>
+<span class="text-[11px] font-body text-zinc-400">https://localhost:3000/dashboard/overview</span>
+</div>
+</div>
+<!-- Browser Content Canvas (React Dashboard) -->
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-surface p-6">
+<div class="max-w-4xl mx-auto space-y-6">
+<!-- Dashboard Header -->
+<div class="flex justify-between items-end">
+<div>
+<h1 class="font-headline text-3xl font-bold tracking-tight text-on-surface mb-1">System Overview</h1>
+<p class="text-muted-ui font-body text-sm text-zinc-500">Real-time performance metrics and kernel status.</p>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-primary-container/10 text-primary-container font-headline text-[10px] font-bold tracking-wider rounded-sm border border-primary-container/20">LIVE</span>
+<span class="px-2 py-1 bg-surface-container-high text-on-surface-variant font-headline text-[10px] font-bold tracking-wider rounded-sm border border-outline-variant/10 uppercase">v2.4.0-STABLE</span>
+</div>
+</div>
+<!-- Bento Grid Stats -->
+<div class="grid grid-cols-12 gap-4">
+<div class="col-span-12 md:col-span-8 bg-surface-container-low p-5 border border-outline-variant/5 hover:border-blue-500/20 transition-all duration-300">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline text-xs font-bold text-zinc-400 uppercase tracking-widest">Network Throughput</h3>
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+</div>
+<div class="h-48 w-full flex items-end justify-between gap-1">
+<div class="w-full bg-primary-container/5 hover:bg-primary-container/20 h-[30%] transition-all"></div>
+<div class="w-full bg-primary-container/10 hover:bg-primary-container/30 h-[45%] transition-all"></div>
+<div class="w-full bg-primary-container/5 hover:bg-primary-container/20 h-[25%] transition-all"></div>
+<div class="w-full bg-primary-container/20 hover:bg-primary-container/40 h-[60%] transition-all"></div>
+<div class="w-full bg-primary-container/15 hover:bg-primary-container/35 h-[80%] transition-all"></div>
+<div class="w-full bg-primary-container/25 hover:bg-primary-container/50 h-[55%] transition-all"></div>
+<div class="w-full bg-primary-container/30 hover:bg-primary-container/60 h-[90%] transition-all border-t border-primary"></div>
+<div class="w-full bg-primary-container/10 hover:bg-primary-container/30 h-[40%] transition-all"></div>
+<div class="w-full bg-primary-container/5 hover:bg-primary-container/20 h-[20%] transition-all"></div>
+<div class="w-full bg-primary-container/20 hover:bg-primary-container/40 h-[65%] transition-all"></div>
+<div class="w-full bg-primary-container/40 hover:bg-primary-container/70 h-[75%] transition-all border-t border-primary"></div>
+<div class="w-full bg-primary-container/15 hover:bg-primary-container/35 h-[35%] transition-all"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-headline text-zinc-600 uppercase">
+<span>00:00:00</span>
+<span>T + 12.5s</span>
+<span>Current</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-4 bg-surface-container-high p-5 border border-outline-variant/5">
+<h3 class="font-headline text-xs font-bold text-zinc-400 uppercase tracking-widest mb-4">Memory Allocation</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-[11px] mb-2">
+<span class="text-on-surface">Buffer Pool</span>
+<span class="text-primary">82%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest w-full">
+<div class="h-full bg-primary w-[82%] shadow-[0_0_8px_rgba(159,202,255,0.4)]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] mb-2">
+<span class="text-on-surface">Thread Stack</span>
+<span class="text-secondary">41%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest w-full">
+<div class="h-full bg-secondary w-[41%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] mb-2">
+<span class="text-on-surface">Cache L3</span>
+<span class="text-zinc-500">12%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest w-full">
+<div class="h-full bg-zinc-700 w-[12%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant/5">
+<p class="text-[10px] text-zinc-500 italic leading-relaxed">System optimization active. Garbage collection cycle scheduled in 14ms.</p>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest border border-outline-variant/5">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant/5 bg-surface-container-low">
+<th class="p-3 font-headline text-[10px] font-bold text-zinc-500 uppercase">Process ID</th>
+<th class="p-3 font-headline text-[10px] font-bold text-zinc-500 uppercase">Status</th>
+<th class="p-3 font-headline text-[10px] font-bold text-zinc-500 uppercase">Load</th>
+<th class="p-3 font-headline text-[10px] font-bold text-zinc-500 uppercase text-right">Uptime</th>
+</tr>
+</thead>
+<tbody class="text-xs font-body">
+<tr class="border-b border-outline-variant/5 hover:bg-zinc-900/40">
+<td class="p-3 text-primary-container font-mono">0x7F22A</td>
+<td class="p-3"><span class="w-2 h-2 rounded-full bg-green-500 inline-block mr-2"></span> Active</td>
+<td class="p-3">0.02ms</td>
+<td class="p-3 text-right text-zinc-400">14:22:01</td>
+</tr>
+<tr class="border-b border-outline-variant/5 hover:bg-zinc-900/40">
+<td class="p-3 text-primary-container font-mono">0x14C90</td>
+<td class="p-3"><span class="w-2 h-2 rounded-full bg-green-500 inline-block mr-2"></span> Active</td>
+<td class="p-3">1.40ms</td>
+<td class="p-3 text-right text-zinc-400">02:11:54</td>
+</tr>
+<tr class="hover:bg-zinc-900/40">
+<td class="p-3 text-primary-container font-mono">0xFF091</td>
+<td class="p-3"><span class="w-2 h-2 rounded-full bg-secondary inline-block mr-2"></span> Idle</td>
+<td class="p-3">0.00ms</td>
+<td class="p-3 text-right text-zinc-400">00:04:12</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side: Terminal Box -->
+<section class="flex-1 flex flex-col bg-zinc-950">
+<!-- Terminal Header -->
+<div class="h-9 bg-zinc-900/50 flex items-center border-b border-zinc-800 px-4 justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-zinc-500 text-sm">terminal</span>
+<div class="flex gap-4">
+<span class="font-headline text-[10px] font-bold uppercase text-blue-400 tracking-widest border-b border-blue-400 pb-0.5">npm run dev</span>
+<span class="font-headline text-[10px] font-bold uppercase text-zinc-600 tracking-widest hover:text-zinc-400 cursor-pointer">bash</span>
+<span class="font-headline text-[10px] font-bold uppercase text-zinc-600 tracking-widest hover:text-zinc-400 cursor-pointer">debug console</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="w-5 h-5 flex items-center justify-center hover:bg-zinc-800 rounded">
+<span class="material-symbols-outlined text-zinc-500 text-[16px]">add</span>
+</button>
+<button class="w-5 h-5 flex items-center justify-center hover:bg-zinc-800 rounded">
+<span class="material-symbols-outlined text-zinc-500 text-[16px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Terminal Content -->
+<div class="flex-1 p-4 font-mono text-[13px] leading-relaxed overflow-y-auto custom-scrollbar selection:bg-primary/30">
+<div class="space-y-1">
+<p class="text-zinc-500">&gt; claude-code-box@1.0.4 dev</p>
+<p class="text-zinc-500">&gt; vite</p>
+<p class="pt-2"><span class="text-green-400">VITE v5.0.12</span> <span class="text-zinc-500">ready in 245 ms</span></p>
+<p class="pt-1"><span class="text-zinc-400">➜</span> <span class="text-on-surface">Local:</span> <span class="text-blue-400 underline">http://localhost:3000/</span></p>
+<p class="text-zinc-400">➜  <span class="text-on-surface">Network:</span> <span class="text-zinc-500 italic">use --host to expose</span></p>
+<div class="pt-4 space-y-0.5">
+<p class="text-zinc-500 text-[11px]">[14:22:01] <span class="text-blue-400">INFO</span>  Checking for dependency updates...</p>
+<p class="text-zinc-500 text-[11px]">[14:22:02] <span class="text-blue-400">INFO</span>  Hydrating SSR components...</p>
+<p class="text-zinc-500 text-[11px]">[14:22:03] <span class="text-green-400">SUCCESS</span>  Compiled 142 modules successfully.</p>
+<p class="text-zinc-500 text-[11px]">[14:22:05] <span class="text-blue-400">INFO</span>  Hot Module Replacement active.</p>
+<p class="text-zinc-500 text-[11px]">[14:22:12] <span class="text-on-surface-variant font-bold">API</span>  GET /api/v1/metrics - <span class="text-green-400">200 OK</span> (14ms)</p>
+<p class="text-zinc-500 text-[11px]">[14:22:15] <span class="text-on-surface-variant font-bold">API</span>  GET /api/v1/user/config - <span class="text-green-400">200 OK</span> (8ms)</p>
+<p class="text-zinc-500 text-[11px]">[14:22:20] <span class="text-secondary font-bold">WARN</span>  Deprecated property 'legacy_mode' detected in config.ts:42</p>
+<p class="text-zinc-500 text-[11px]">[14:22:25] <span class="text-on-surface-variant font-bold">API</span>  POST /api/v1/telemetry - <span class="text-green-400">201 CREATED</span> (42ms)</p>
+<p class="text-zinc-500 text-[11px]">[14:23:01] <span class="text-blue-400">INFO</span>  Background sync initiated for 'worker-01'</p>
+</div>
+<!-- User Prompt -->
+<div class="pt-4 flex items-center gap-2">
+<span class="text-blue-500">➜</span>
+<span class="text-green-400 font-bold">claude-box</span>
+<span class="text-zinc-500">git:(</span><span class="text-error">main</span><span class="text-zinc-500">)</span>
+<div class="flex items-center">
+<span class="text-on-surface">npm install</span>
+<span class="w-2 h-4 bg-blue-500/80 ml-1 animate-pulse"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Bottom Footer -->
+<div class="h-6 bg-zinc-900 border-t border-zinc-800 flex items-center px-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[12px] text-green-400">check_circle</span>
+<span class="text-[9px] font-headline font-bold text-zinc-500 uppercase">Master Node Online</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[12px] text-zinc-500">speed</span>
+<span class="text-[9px] font-headline font-bold text-zinc-500 uppercase">Latency: 12ms</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[9px] font-headline font-bold text-zinc-600 uppercase">UTF-8</span>
+<span class="text-[9px] font-headline font-bold text-zinc-600 uppercase">Line 142, Col 12</span>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Status Bar (Global) -->
+<footer class="h-6 bg-blue-600 text-white flex items-center px-3 justify-between z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+<span class="text-[10px] font-bold font-headline uppercase tracking-tight">Terminal Root</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span class="text-[10px] font-bold font-headline uppercase tracking-tight">Synced</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[10px] font-bold font-headline uppercase tracking-tight">Main*</span>
+<span class="text-[10px] font-bold font-headline uppercase tracking-tight">TypeScript 5.3</span>
+<span class="material-symbols-outlined text-[14px]">notifications</span>
+</div>
+</footer>
+</body></html>
