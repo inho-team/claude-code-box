@@ -127,7 +127,11 @@
       "category": "Development",
       "artifactName": "${productName}-${version}-linux-${arch}.${ext}",
       "maintainer": "claude-code-box",
-      "description": "Lightweight cross-platform GUI for Claude Code CLI"
+      "description": "Lightweight cross-platform GUI for Claude Code CLI",
+      "executableName": "claude-code-box"
+    },
+    "deb": {
+      "afterInstall": "build/linux/after-install.sh"
     },
     "npmRebuild": true,
     "nodeGypRebuild": false
