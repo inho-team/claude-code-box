@@ -1,11 +1,15 @@
 import { ipcMain, BrowserWindow } from 'electron';
 import * as os from 'os';
 
-// node-pty must be required (not imported) as it's a native module
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const pty = require('node-pty');
+// Lazy-load node-pty to prevent crash if not available
+let pty: typeof import('node-pty') | null = null;
+try {
+  pty = require('node-pty');
+} catch {
+  console.warn('node-pty not available — terminal will not work');
+}
 
-type IPty = ReturnType<typeof pty.spawn>;
+type IPty = any;
 
 const terminals: Map<string, IPty> = new Map();
 
@@ -21,6 +25,11 @@ export function registerPtyHandlers(): void {
     'terminal:create',
     (event, id: string, options?: { cols?: number; rows?: number; shellPath?: string }) => {
       if (terminals.has(id)) {
+        return;
+      }
+
+      if (!pty) {
+        console.error('node-pty not available');
         return;
       }
 
